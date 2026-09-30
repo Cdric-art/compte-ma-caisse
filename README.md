@@ -9,12 +9,16 @@ qui sert à compter le fond de caisse et à clôturer la caisse.
 | --------- | ------------------- | -------------------------------------------------------------------- |
 | `/`       | `HomeView`          | Titre, date et heure, bandes colorées, bascule clair / sombre         |
 | `/fond`   | `CashFundView`      | Montant attendu, 13 coupures (quantité × valeur), total et écart      |
-| `/caisse` | `CashRegisterView`  | Deux rapports de caisse, 7 moyens de paiement multi-lignes, écart     |
+| `/caisse` | `CashRegisterView`  | Deux rapports de caisse, 8 moyens de paiement, écart                  |
 
 ## Nouveautés par rapport à l'app iOS
 
-- **Export PDF** : le bouton « Exporter en PDF » génère un relevé daté qui réunit le fond de
-  caisse et la caisse, puis le télécharge. Les lignes laissées vides ne sont pas imprimées.
+- **Chèques vacances** : moyen de paiement ajouté entre les tickets restaurant et les dépenses.
+- **Espèces** : un seul montant, sans ligne supplémentaire. Les six autres moyens de paiement
+  gardent le bouton `+` de l'app iOS.
+- **Export PDF** : le bouton « Exporter en PDF », sur l'écran Caisse, génère un relevé daté qui
+  réunit le fond de caisse et la caisse, puis le télécharge. Les lignes laissées vides ne sont
+  pas imprimées.
 - **Réinitialiser** : vide l'écran courant.
 - Les montants acceptent la virgule comme le point (`12,50` ou `12.50`).
 - Le flux d'actualités NewsAPI de l'écran d'accueil n'a pas été repris : sa clé d'API était

@@ -41,7 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col bg-base text-text">
+      <body className="flex min-h-full flex-col overflow-x-hidden bg-base text-text">
         <CashProvider>
           <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4">
             {children}

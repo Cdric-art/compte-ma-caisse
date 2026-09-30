@@ -6,8 +6,17 @@ import { parseAmount, parseCount } from "@/lib/money";
 import { exportToPdf } from "@/lib/pdf";
 import { useCash } from "./CashProvider";
 
-/** Export PDF du relevé complet (fond + caisse) et remise à zéro de l'écran courant. */
-export function ActionBar({ onReset }: { onReset: () => void }) {
+/**
+ * Remise à zéro de l'écran courant, et export PDF du relevé complet (fond +
+ * caisse) là où il est proposé.
+ */
+export function ActionBar({
+  onReset,
+  withExport = true,
+}: {
+  onReset: () => void;
+  withExport?: boolean;
+}) {
   const cash = useCash();
   const [feedback, setFeedback] = useState<string | null>(null);
 
@@ -45,18 +54,20 @@ export function ActionBar({ onReset }: { onReset: () => void }) {
   };
 
   return (
-    <div className="flex flex-col gap-2 pt-2">
-      <div className="flex gap-3">
-        <button
-          type="button"
-          onClick={handleExport}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-text px-4 py-3 text-sm font-semibold text-base transition-opacity hover:opacity-85 active:opacity-70"
-        >
-          <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-          </svg>
-          Exporter en PDF
-        </button>
+    <div className="flex flex-col gap-2 pt-6">
+      <div className={`flex gap-3 ${withExport ? "" : "justify-center"}`}>
+        {withExport && (
+          <button
+            type="button"
+            onClick={handleExport}
+            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-text px-4 py-3 text-sm font-semibold text-base transition-opacity hover:opacity-85 active:opacity-70"
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+            </svg>
+            Exporter en PDF
+          </button>
+        )}
         <button
           type="button"
           onClick={onReset}

@@ -74,7 +74,7 @@ export default function CashFundPage() {
         </ul>
       </section>
 
-      <ActionBar onReset={cash.resetFund} />
+      <ActionBar onReset={cash.resetFund} withExport={false} />
     </main>
   );
 }

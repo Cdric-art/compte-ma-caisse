@@ -26,6 +26,8 @@ export type PaymentMethod = {
   key: string;
   label: string;
   color: string;
+  /** Un seul montant saisissable, sans bouton d'ajout de ligne. */
+  singleLine?: boolean;
 };
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
@@ -34,6 +36,7 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   { key: "amex", label: "AMEX CONTACT", color: "var(--maroon)" },
   { key: "amexLess", label: "AMEX EXPRESSPAY", color: "var(--flamingo)" },
   { key: "ticket", label: "TICKETS RESTAURANT", color: "var(--yellow)" },
+  { key: "holidayVoucher", label: "CHÈQUES VACANCES", color: "var(--pink)" },
   { key: "expenses", label: "DÉPENSES", color: "var(--green)" },
-  { key: "cash", label: "ESPÈCES", color: "var(--peach)" },
+  { key: "cash", label: "ESPÈCES", color: "var(--peach)", singleLine: true },
 ];

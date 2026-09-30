@@ -92,11 +92,15 @@ export default function CashRegisterPage() {
                         cash.setPaymentLine(method.key, index, event.target.value)
                       }
                       placeholder="0"
-                      aria-label={`${method.label}, montant ${index + 1}`}
+                      aria-label={
+                        method.singleLine
+                          ? method.label
+                          : `${method.label}, montant ${index + 1}`
+                      }
                       className="min-w-0 flex-1 rounded-xl border bg-surface px-3 py-2.5 font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
                       style={{ borderColor: method.color }}
                     />
-                    {index === 0 ? (
+                    {method.singleLine ? null : index === 0 ? (
                       <button
                         type="button"
                         onClick={() => cash.addPaymentLine(method.key)}
