@@ -1,13 +1,6 @@
 import { jsPDF } from "jspdf";
 import { formatEuroForPdf } from "./money";
 
-export type FundLine = {
-  label: string;
-  count: number;
-  value: number;
-  subtotal: number;
-};
-
 export type MethodLine = {
   label: string;
   amounts: number[];
@@ -15,20 +8,12 @@ export type MethodLine = {
 };
 
 export type PdfPayload = {
-  fund: {
-    expected: number;
-    total: number;
-    difference: number;
-    lines: FundLine[];
-  };
-  register: {
-    firstReport: number;
-    secondReport: number;
-    reportsTotal: number;
-    total: number;
-    difference: number;
-    methods: MethodLine[];
-  };
+  firstReport: number;
+  secondReport: number;
+  reportsTotal: number;
+  total: number;
+  difference: number;
+  methods: MethodLine[];
 };
 
 const MARGIN = 16;
@@ -36,7 +21,7 @@ const PAGE_HEIGHT = 297;
 const PAGE_WIDTH = 210;
 const RIGHT = PAGE_WIDTH - MARGIN;
 
-/** Construit le releve. Isole du telechargement pour rester testable. */
+/** Construit le releve de caisse. Isole du telechargement pour rester testable. */
 export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   let y = MARGIN;
@@ -46,17 +31,6 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
       doc.addPage();
       y = MARGIN;
     }
-  };
-
-  const heading = (text: string) => {
-    nextPageIfNeeded(16);
-    y += 6;
-    doc.setFont("helvetica", "bold").setFontSize(13).setTextColor(40);
-    doc.text(text, MARGIN, y);
-    y += 2;
-    doc.setDrawColor(200).setLineWidth(0.3);
-    doc.line(MARGIN, y, RIGHT, y);
-    y += 6;
   };
 
   const row = (left: string, right: string, bold = false) => {
@@ -78,43 +52,19 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
     y + 4,
     { align: "right" },
   );
-  y += 10;
+  y += 8;
+  doc.setDrawColor(200).setLineWidth(0.3);
+  doc.line(MARGIN, y, RIGHT, y);
+  y += 8;
 
-  // Fond de caisse
-  heading("Fond de caisse");
-  doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(120);
-  doc.text("Coupure", MARGIN, y);
-  doc.text("Quantité", MARGIN + 60, y, { align: "right" });
-  doc.text("Sous-total", RIGHT, y, { align: "right" });
-  y += 5;
+  // Rapports de caisse
+  row("Rapport 1", formatEuroForPdf(payload.firstReport));
+  row("Rapport 2", formatEuroForPdf(payload.secondReport));
+  row("Total CA", formatEuroForPdf(payload.reportsTotal), true);
 
-  const counted = payload.fund.lines.filter((line) => line.count > 0);
-  if (counted.length === 0) {
-    row("Aucune coupure comptée", "—");
-  } else {
-    for (const line of counted) {
-      nextPageIfNeeded(7);
-      doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(80);
-      doc.text(line.label, MARGIN, y);
-      doc.text(String(line.count), MARGIN + 60, y, { align: "right" });
-      doc.text(formatEuroForPdf(line.subtotal), RIGHT, y, { align: "right" });
-      y += 6;
-    }
-  }
-
-  y += 2;
-  row("Total compté", formatEuroForPdf(payload.fund.total), true);
-  row("Fond de caisse attendu", formatEuroForPdf(payload.fund.expected));
-  row("Écart", formatEuroForPdf(payload.fund.difference), true);
-
-  // Caisse
-  heading("Caisse");
-  row("Rapport 1", formatEuroForPdf(payload.register.firstReport));
-  row("Rapport 2", formatEuroForPdf(payload.register.secondReport));
-  row("Total CA", formatEuroForPdf(payload.register.reportsTotal), true);
-
+  // Moyens de paiement
   y += 4;
-  for (const method of payload.register.methods) {
+  for (const method of payload.methods) {
     const amounts = method.amounts.filter((amount) => amount !== 0);
     if (amounts.length === 0) continue;
     nextPageIfNeeded(12);
@@ -133,8 +83,8 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
   }
 
   y += 2;
-  row("Total encaissé", formatEuroForPdf(payload.register.total), true);
-  row("Écart avec le CA", formatEuroForPdf(payload.register.difference), true);
+  row("Total encaissé", formatEuroForPdf(payload.total), true);
+  row("Écart avec le CA", formatEuroForPdf(payload.difference), true);
 
   return doc;
 }

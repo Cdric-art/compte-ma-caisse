@@ -16,9 +16,9 @@ qui sert à compter le fond de caisse et à clôturer la caisse.
 - **Chèques vacances** : moyen de paiement ajouté entre les tickets restaurant et les dépenses.
 - **Espèces** : un seul montant, sans ligne supplémentaire. Les six autres moyens de paiement
   gardent le bouton `+` de l'app iOS.
-- **Export PDF** : le bouton « Exporter en PDF », sur l'écran Caisse, génère un relevé daté qui
-  réunit le fond de caisse et la caisse, puis le télécharge. Les lignes laissées vides ne sont
-  pas imprimées.
+- **Export PDF** : le bouton « Exporter en PDF », sur l'écran Caisse, génère un relevé daté de la
+  caisse, puis le télécharge. Les moyens de paiement laissés vides ne sont pas imprimés. Le fond
+  de caisse n'y figure pas : il sert au comptage, pas à la clôture.
 - **Réinitialiser** : vide l'écran courant.
 - Les montants acceptent la virgule comme le point (`12,50` ou `12.50`).
 - Le flux d'actualités NewsAPI de l'écran d'accueil n'a pas été repris : sa clé d'API était

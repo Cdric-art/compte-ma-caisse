@@ -1,15 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { DENOMINATIONS, PAYMENT_METHODS } from "@/lib/denominations";
-import { parseAmount, parseCount } from "@/lib/money";
+import { PAYMENT_METHODS } from "@/lib/denominations";
+import { parseAmount } from "@/lib/money";
 import { exportToPdf } from "@/lib/pdf";
 import { useCash } from "./CashProvider";
 
-/**
- * Remise à zéro de l'écran courant, et export PDF du relevé complet (fond +
- * caisse) là où il est proposé.
- */
+/** Remise à zéro de l'écran courant, et export PDF de la caisse là où il est proposé. */
 export function ActionBar({
   onReset,
   withExport = true,
@@ -22,32 +19,16 @@ export function ActionBar({
 
   const handleExport = () => {
     const filename = exportToPdf({
-      fund: {
-        expected: parseAmount(cash.expected),
-        total: cash.fundTotal,
-        difference: cash.fundDifference,
-        lines: DENOMINATIONS.map((d) => {
-          const count = parseCount(cash.counts[d.key] ?? "");
-          return {
-            label: d.label,
-            count,
-            value: d.value,
-            subtotal: count * d.value,
-          };
-        }),
-      },
-      register: {
-        firstReport: parseAmount(cash.firstReport),
-        secondReport: parseAmount(cash.secondReport),
-        reportsTotal: cash.reportsTotal,
-        total: cash.registerTotal,
-        difference: cash.registerDifference,
-        methods: PAYMENT_METHODS.map((m) => ({
-          label: m.label,
-          amounts: (cash.payments[m.key] ?? []).map(parseAmount),
-          total: cash.paymentTotals[m.key] ?? 0,
-        })),
-      },
+      firstReport: parseAmount(cash.firstReport),
+      secondReport: parseAmount(cash.secondReport),
+      reportsTotal: cash.reportsTotal,
+      total: cash.registerTotal,
+      difference: cash.registerDifference,
+      methods: PAYMENT_METHODS.map((m) => ({
+        label: m.label,
+        amounts: (cash.payments[m.key] ?? []).map(parseAmount),
+        total: cash.paymentTotals[m.key] ?? 0,
+      })),
     });
     setFeedback(filename);
     setTimeout(() => setFeedback(null), 4000);
