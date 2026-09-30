@@ -18,13 +18,15 @@ export const metadata: Metadata = {
   title: "Compte ta caisse",
   description:
     "Comptez votre fond de caisse et clôturez votre caisse rapidement, puis exportez le relevé en PDF.",
-  icons: { icon: "/icon-180.png", apple: "/icon-180.png" },
+  // Les icônes viennent des fichiers app/favicon.ico, app/icon.svg et
+  // app/apple-icon.png : les déclarer ici les remplacerait.
 };
 
+/** Teinte la barre du navigateur, aux couleurs de fond Rosé Pine. */
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#dce0e3" },
-    { media: "(prefers-color-scheme: dark)", color: "#313244" },
+    { media: "(prefers-color-scheme: light)", color: "#faf4ed" },
+    { media: "(prefers-color-scheme: dark)", color: "#191724" },
   ],
 };
 
