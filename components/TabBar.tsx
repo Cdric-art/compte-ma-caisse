@@ -13,8 +13,10 @@ export function TabBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky bottom-0 z-10 border-t border-text/10 bg-surface/95 backdrop-blur print:hidden">
-      <ul className="mx-auto flex max-w-3xl">
+    // La barre flotte : le contenu défile autour d'elle. Le retrait du bas suit
+    // la zone sûre de l'iPhone, sinon la barre d'accueil mord sur les libellés.
+    <nav className="sticky bottom-0 z-10 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 print:hidden">
+      <ul className="mx-auto flex max-w-md rounded-full border border-text/10 bg-surface/90 px-2 shadow-[0_8px_28px_rgb(0_0_0/0.18)] backdrop-blur-md">
         {TABS.map((tab) => {
           const active = pathname === tab.href;
           return (
@@ -22,8 +24,8 @@ export function TabBar() {
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 py-2 text-[11px] transition-opacity ${
-                  active ? "text-text opacity-100" : "text-text opacity-45 hover:opacity-70"
+                className={`flex flex-col items-center gap-0.5 rounded-full py-2 text-[11px] transition-colors ${
+                  active ? "font-semibold text-iris" : "text-subtle hover:text-text"
                 }`}
               >
                 <svg
