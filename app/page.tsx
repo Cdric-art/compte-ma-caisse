@@ -22,7 +22,7 @@ const STRIPE_COLORS = [
  * par les bords de l'écran. La palette est donc répétée jusqu'à couvrir la
  * diagonale d'un écran large.
  */
-const STRIPES = Array.from({ length: 7 }, () => STRIPE_COLORS).flat();
+const STRIPES = Array.from({ length: 5 }, () => STRIPE_COLORS).flat();
 
 export default function Home() {
   const now = useClock();
@@ -35,7 +35,7 @@ export default function Home() {
 
       <div className="flex flex-1 flex-col justify-center gap-8 pb-10">
         <div className="relative ml-[calc(50%-50vw)] flex h-60 w-screen items-center justify-center overflow-hidden">
-          <div className="absolute left-1/2 top-1/2 flex w-[250vw] -translate-x-1/2 -translate-y-1/2 -rotate-[32deg] flex-col gap-[22px]">
+          <div className="absolute left-1/2 top-1/2 flex w-[250vw] -translate-x-1/2 -translate-y-1/2 -rotate-[32deg] flex-col gap-[44px]">
             {STRIPES.map((color, index) => (
               <div key={index} className="h-px w-full" style={{ background: color }} />
             ))}
