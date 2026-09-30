@@ -20,7 +20,7 @@ export function SummaryBar({
       </div>
       <div
         className="flex flex-1 flex-col rounded-full bg-surface px-4 py-2 text-center"
-        style={{ color: difference > 0 ? "var(--positive)" : "var(--accent)" }}
+        style={{ color: difference > 0 ? "var(--positive)" : "var(--text)" }}
       >
         <span className="text-[11px] opacity-60">Différence</span>
         <span className="font-mono text-sm font-semibold tabular-nums">

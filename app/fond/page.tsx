@@ -55,7 +55,7 @@ export default function CashFundPage() {
                   }
                   placeholder="0"
                   aria-label={`Quantité de ${denomination.label}`}
-                  className="w-14 rounded-lg bg-base px-2 py-1.5 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
+                  className="w-14 rounded-lg bg-overlay px-2 py-1.5 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
                 />
                 <span className="text-sm opacity-50">×</span>
                 <span

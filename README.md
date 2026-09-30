@@ -33,9 +33,12 @@ mémorisé, dans le `localStorage`.
 
 ## Palette
 
-Les couleurs (Catppuccin) sont reprises de `Assets.xcassets` et déclarées en variables CSS dans
-`app/globals.css`. Une seule valeur diffère : en thème sombre, `RedCat` valait `#3e6b5e`, un
-vert-gris illisible sur le fond sombre, remplacé par `#f38ba8`.
+L'interface utilise [Rosé Pine](https://rosepinetheme.com) : la variante Dawn en thème clair,
+la variante principale en thème sombre. Les valeurs proviennent de `rose-pine/palette`.
+
+La palette ne compte que six accents (love, gold, rose, pine, foam, iris) là où l'app iOS en
+utilisait dix. Ils cyclent sur les coupures et les moyens de paiement, de sorte que deux voisins
+n'aient jamais la même couleur.
 
 ## Développement
 

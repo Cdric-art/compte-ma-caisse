@@ -34,7 +34,7 @@ export default function CashRegisterPage() {
             onChange={(event) => cash.setFirstReport(event.target.value)}
             placeholder="0"
             aria-label="Premier rapport de caisse"
-            className="min-w-0 flex-1 rounded-lg bg-base px-3 py-2 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
+            className="min-w-0 flex-1 rounded-lg bg-overlay px-3 py-2 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
           />
           <span className="font-bold opacity-30">+</span>
           <input
@@ -44,7 +44,7 @@ export default function CashRegisterPage() {
             onChange={(event) => cash.setSecondReport(event.target.value)}
             placeholder="0"
             aria-label="Second rapport de caisse"
-            className="min-w-0 flex-1 rounded-lg bg-base px-3 py-2 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
+            className="min-w-0 flex-1 rounded-lg bg-overlay px-3 py-2 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
           />
         </div>
       </section>

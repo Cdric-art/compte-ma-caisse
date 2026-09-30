@@ -6,14 +6,12 @@ import { useClock } from "@/lib/hooks";
 
 /** Les bandes colorées inclinées de l'écran d'accueil iOS. */
 const STRIPE_COLORS = [
-  "var(--red)",
-  "var(--maroon)",
-  "var(--green)",
-  "var(--yellow)",
-  "var(--pink)",
-  "var(--peach)",
-  "var(--mauve)",
-  "var(--flamingo)",
+  "var(--love)",
+  "var(--gold)",
+  "var(--rose)",
+  "var(--pine)",
+  "var(--foam)",
+  "var(--iris)",
 ];
 
 /**
@@ -22,7 +20,7 @@ const STRIPE_COLORS = [
  * par les bords de l'écran. La palette est donc répétée jusqu'à couvrir la
  * diagonale d'un écran large.
  */
-const STRIPES = Array.from({ length: 5 }, () => STRIPE_COLORS).flat();
+const STRIPES = Array.from({ length: 7 }, () => STRIPE_COLORS).flat();
 
 export default function Home() {
   const now = useClock();
