@@ -1,26 +1,79 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette reprise de l'app iOS (Assets.xcassets) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --base: #dce0e3;
+  --surface: #eff1f0;
+  --text: #4c4f6e;
+  --accent: #1a1a1c;
+  --rosewater: #fcece7;
+  --primary: #1e66f5;
+  --secondary: #ea78cb;
+  --red: #fc6d60;
+  --maroon: #cb5d70;
+  --green: #9bda8a;
+  --yellow: #feda6e;
+  --pink: #fe6aad;
+  --peach: #fea160;
+  --mauve: #ad97dd;
+  --flamingo: #fb9da2;
+  --positive: #16a34a;
+}
+
+.dark {
+  --base: #313244;
+  --surface: #1e212b;
+  --text: #ccd6d5;
+  --accent: #f2f2f7;
+  --rosewater: #f1f1f1;
+  --primary: #89b5fa;
+  --secondary: #f5c2e7;
+  /* L'app iOS déclarait ici #3e6b5e (un vert-gris), illisible sur le fond sombre */
+  --red: #f38ba8;
+  --maroon: #cb5d70;
+  --green: #b5daad;
+  --yellow: #fcda87;
+  --pink: #ea78cb;
+  --peach: #fcb589;
+  --mauve: #f5c2e7;
+  --flamingo: #fbadad;
+  --positive: #7ee08b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-accent: var(--accent);
+  --color-rosewater: var(--rosewater);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-red: var(--red);
+  --color-maroon: var(--maroon);
+  --color-green: var(--green);
+  --color-yellow: var(--yellow);
+  --color-pink: var(--pink);
+  --color-peach: var(--peach);
+  --color-mauve: var(--mauve);
+  --color-flamingo: var(--flamingo);
+  --color-positive: var(--positive);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--base);
+  color: var(--text);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Masque les fleches des inputs numeriques : on saisit au clavier ou au pave */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
 }
