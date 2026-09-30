@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useClock } from "@/lib/hooks";
 
@@ -38,15 +38,10 @@ export default function Home() {
               <div key={index} className="h-px w-full" style={{ background: color }} />
             ))}
           </div>
-          <div className="relative flex size-44 items-center justify-center rounded-full bg-text shadow-[6px_6px_18px_var(--text)]">
-            <Image
-              src="/cash-register.png"
-              alt=""
-              width={100}
-              height={100}
-              priority
-              className="h-24 w-auto"
-            />
+          {/* Disque en surface plutôt qu'en texte : il détache le logo des
+              bandes sans s'inverser d'un thème à l'autre. */}
+          <div className="relative flex size-44 items-center justify-center rounded-full border border-text/10 bg-surface/90 text-text shadow-[0_10px_30px_rgb(0_0_0/0.18)] backdrop-blur-sm">
+            <Logo className="size-24" />
           </div>
         </div>
 
