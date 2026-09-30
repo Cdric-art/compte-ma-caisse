@@ -6,6 +6,7 @@ import { SummaryBar } from "@/components/SummaryBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { PAYMENT_METHODS } from "@/lib/denominations";
 import { formatEuro } from "@/lib/money";
+import { formatServiceDate } from "@/lib/serviceDate";
 
 export default function CashRegisterPage() {
   const cash = useCash();
@@ -23,6 +24,22 @@ export default function CashRegisterPage() {
       />
 
       <section className="pt-4">
+        <h2 className="pb-2 text-xs uppercase tracking-wide opacity-60">
+          Date de la caisse
+        </h2>
+        <input
+          type="date"
+          value={cash.serviceDate}
+          onChange={(event) => cash.setServiceDate(event.target.value)}
+          aria-label="Date de la caisse"
+          className="w-full rounded-xl bg-surface px-4 py-3 text-center font-mono tabular-nums outline-none focus:ring-2 focus:ring-text/30"
+        />
+        <p className="pt-2 text-center text-xs opacity-60">
+          {formatServiceDate(cash.serviceDate) || "\u00a0"}
+        </p>
+      </section>
+
+      <section className="pt-6">
         <h2 className="pb-2 text-xs uppercase tracking-wide opacity-60">
           Montant du ou des rapports de caisse
         </h2>

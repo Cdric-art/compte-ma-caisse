@@ -19,6 +19,7 @@ export function ActionBar({
 
   const handleExport = () => {
     const filename = exportToPdf({
+      serviceDate: cash.serviceDate,
       firstReport: parseAmount(cash.firstReport),
       secondReport: parseAmount(cash.secondReport),
       reportsTotal: cash.reportsTotal,

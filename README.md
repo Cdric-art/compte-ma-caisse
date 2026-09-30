@@ -16,6 +16,10 @@ qui sert à compter le fond de caisse et à clôturer la caisse.
 - **Chèques vacances** : moyen de paiement ajouté entre les tickets restaurant et les dépenses.
 - **Espèces** : un seul montant, sans ligne supplémentaire. Les six autres moyens de paiement
   gardent le bouton `+` de l'app iOS.
+- **Date de la caisse** : une clôture faite après minuit appartient au service de la veille. Le
+  champ est donc pré-rempli avec la veille tant qu'il est avant 6 h du matin (`NEW_DAY_HOUR` dans
+  `lib/serviceDate.ts`), et reste modifiable. C'est cette date qui titre le relevé et nomme le
+  fichier ; l'heure d'édition n'y figure qu'en mention secondaire.
 - **Export PDF** : le bouton « Exporter en PDF », sur l'écran Caisse, génère un relevé daté de la
   caisse, puis le télécharge. Les moyens de paiement laissés vides ne sont pas imprimés. Le fond
   de caisse n'y figure pas : il sert au comptage, pas à la clôture.

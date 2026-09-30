@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useMemo, useState } from "react";
 import { DENOMINATIONS, PAYMENT_METHODS } from "@/lib/denominations";
+import { useDefaultServiceDate } from "@/lib/hooks";
 import { parseAmount, parseCount } from "@/lib/money";
 
 type Counts = Record<string, string>;
@@ -24,6 +25,8 @@ type CashContextValue = {
   resetFund: () => void;
 
   // Caisse
+  serviceDate: string;
+  setServiceDate: (value: string) => void;
   firstReport: string;
   setFirstReport: (value: string) => void;
   secondReport: string;
@@ -48,6 +51,9 @@ const CashContext = createContext<CashContextValue | null>(null);
 export function CashProvider({ children }: { children: React.ReactNode }) {
   const [expected, setExpected] = useState("");
   const [counts, setCounts] = useState<Counts>(emptyCounts);
+  // null tant que la date proposee n'a pas ete corrigee a la main.
+  const [serviceDateOverride, setServiceDateOverride] = useState<string | null>(null);
+  const defaultServiceDate = useDefaultServiceDate();
   const [firstReport, setFirstReport] = useState("");
   const [secondReport, setSecondReport] = useState("");
   const [payments, setPayments] = useState<Payments>(emptyPayments);
@@ -80,6 +86,8 @@ export function CashProvider({ children }: { children: React.ReactNode }) {
         setCounts(emptyCounts());
       },
 
+      serviceDate: serviceDateOverride ?? defaultServiceDate,
+      setServiceDate: setServiceDateOverride,
       firstReport,
       setFirstReport,
       secondReport,
@@ -103,12 +111,21 @@ export function CashProvider({ children }: { children: React.ReactNode }) {
       reportsTotal,
       registerDifference: registerTotal - reportsTotal,
       resetRegister: () => {
+        setServiceDateOverride(null);
         setFirstReport("");
         setSecondReport("");
         setPayments(emptyPayments());
       },
     };
-  }, [expected, counts, firstReport, secondReport, payments]);
+  }, [
+    expected,
+    counts,
+    serviceDateOverride,
+    defaultServiceDate,
+    firstReport,
+    secondReport,
+    payments,
+  ]);
 
   return <CashContext.Provider value={value}>{children}</CashContext.Provider>;
 }

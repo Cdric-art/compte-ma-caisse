@@ -1,5 +1,6 @@
 import { jsPDF } from "jspdf";
 import { formatEuroForPdf } from "./money";
+import { formatServiceDate } from "./serviceDate";
 
 export type MethodLine = {
   label: string;
@@ -8,6 +9,8 @@ export type MethodLine = {
 };
 
 export type PdfPayload = {
+  /** Service auquel se rattache la caisse, au format YYYY-MM-DD. */
+  serviceDate: string;
   firstReport: number;
   secondReport: number;
   reportsTotal: number;
@@ -42,17 +45,22 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
     y += 6;
   };
 
-  // En-tete
+  // En-tete : la date du service prime sur celle de l'edition, une cloture
+  // faite apres minuit appartenant encore au service de la veille.
   doc.setFont("helvetica", "bold").setFontSize(20).setTextColor(40);
   doc.text("Compte ta caisse", MARGIN, y + 4);
-  doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(120);
+  doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(140);
   doc.text(
-    now.toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" }),
+    `Édité le ${now.toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}`,
     RIGHT,
     y + 4,
     { align: "right" },
   );
-  y += 8;
+  y += 12;
+
+  doc.setFont("helvetica", "bold").setFontSize(12).setTextColor(60);
+  doc.text(`Caisse du ${formatServiceDate(payload.serviceDate)}`, MARGIN, y);
+  y += 4;
   doc.setDrawColor(200).setLineWidth(0.3);
   doc.line(MARGIN, y, RIGHT, y);
   y += 8;
@@ -91,9 +99,8 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
 
 /** Genere le releve et declenche le telechargement. Retourne le nom du fichier. */
 export function exportToPdf(payload: PdfPayload): string {
-  const now = new Date();
-  const stamp = now.toISOString().slice(0, 16).replace(/[:T]/g, "-");
-  const filename = `caisse-${stamp}.pdf`;
-  buildPdf(payload, now).save(filename);
+  // Nomme par la date du service : c'est par elle qu'on retrouve un releve.
+  const filename = `caisse-${payload.serviceDate}.pdf`;
+  buildPdf(payload).save(filename);
   return filename;
 }

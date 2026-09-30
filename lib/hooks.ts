@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { defaultServiceDate } from "./serviceDate";
 
 /**
  * Le thème vit sur <html> : il est posé par le script inline avant l'hydratation.
@@ -33,4 +34,16 @@ export function useClock(): Date | null {
   );
 
   return seconds === null ? null : new Date(seconds * 1000);
+}
+
+/**
+ * Date de service par defaut. Lue comme un store externe : les pages sont
+ * prerendues, l'heure du build n'est pas celle du visiteur.
+ */
+export function useDefaultServiceDate(): string {
+  return useSyncExternalStore(
+    () => () => {},
+    () => defaultServiceDate(new Date()),
+    () => "",
+  );
 }
