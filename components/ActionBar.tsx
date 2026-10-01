@@ -24,7 +24,8 @@ export function ActionBar({
       secondReport: parseAmount(cash.secondReport),
       reportsTotal: cash.reportsTotal,
       total: cash.registerTotal,
-      difference: cash.registerDifference,
+      expectedCash: cash.expectedCash,
+      tips: cash.tips,
       methods: PAYMENT_METHODS.map((m) => ({
         label: m.label,
         amounts: (cash.payments[m.key] ?? []).map(parseAmount),

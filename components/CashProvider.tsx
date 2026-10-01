@@ -38,7 +38,10 @@ type CashContextValue = {
   paymentTotals: Record<string, number>;
   registerTotal: number;
   reportsTotal: number;
-  registerDifference: number;
+  /** Espèces que la caisse devrait contenir une fois le reste déduit du CA. */
+  expectedCash: number;
+  /** Excédent d'espèces trouvé dans le tiroir. */
+  tips: number;
   resetRegister: () => void;
 };
 
@@ -73,6 +76,10 @@ export function CashProvider({ children }: { children: React.ReactNode }) {
 
     const registerTotal = Object.values(paymentTotals).reduce((a, b) => a + b, 0);
     const reportsTotal = parseAmount(firstReport) + parseAmount(secondReport);
+
+    // Le CA moins tout ce qui n'est pas des espèces : les paiements par carte,
+    // mais aussi les dépenses, réglées en prenant dans le tiroir.
+    const expectedCash = reportsTotal - (registerTotal - (paymentTotals.cash ?? 0));
 
     return {
       expected,
@@ -109,7 +116,10 @@ export function CashProvider({ children }: { children: React.ReactNode }) {
       paymentTotals,
       registerTotal,
       reportsTotal,
-      registerDifference: registerTotal - reportsTotal,
+      expectedCash,
+      // Équivaut à (espèces comptées − espèces attendues) : une dépense réduit
+      // d'autant les espèces attendues, l'ajouter au total le compense.
+      tips: registerTotal - reportsTotal,
       resetRegister: () => {
         setServiceDateOverride(null);
         setFirstReport("");

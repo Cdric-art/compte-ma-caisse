@@ -20,7 +20,8 @@ export default function CashRegisterPage() {
 
       <SummaryBar
         total={cash.registerTotal}
-        difference={cash.registerDifference}
+        difference={cash.tips}
+        differenceLabel="Pourboires"
       />
 
       <section className="pt-4">
@@ -149,6 +150,20 @@ export default function CashRegisterPage() {
             );
           })}
         </ul>
+      </section>
+
+      {/* Placé après les moyens de paiement : c'est une fois tout saisi que le
+          montant est juste, et c'est là qu'on compare au tiroir. */}
+      <section className="pt-6">
+        <h2 className="pb-2 text-xs uppercase tracking-wide opacity-60">
+          Espèces attendues
+        </h2>
+        <p className="rounded-xl bg-surface px-4 py-3 text-center font-mono text-lg font-semibold tabular-nums">
+          {formatEuro(cash.expectedCash)}
+        </p>
+        <p className="pt-2 text-center text-xs opacity-60">
+          Total CA moins les paiements non espèces et les dépenses
+        </p>
       </section>
 
       <ActionBar onReset={cash.resetRegister} />

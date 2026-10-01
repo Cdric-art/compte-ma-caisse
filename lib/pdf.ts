@@ -15,7 +15,10 @@ export type PdfPayload = {
   secondReport: number;
   reportsTotal: number;
   total: number;
-  difference: number;
+  /** Espèces que la caisse devrait contenir. */
+  expectedCash: number;
+  /** Excédent d'espèces trouvé dans le tiroir. */
+  tips: number;
   methods: MethodLine[];
 };
 
@@ -92,7 +95,8 @@ export function buildPdf(payload: PdfPayload, now = new Date()): jsPDF {
 
   y += 2;
   row("Total encaissé", formatEuroForPdf(payload.total), true);
-  row("Écart avec le CA", formatEuroForPdf(payload.difference), true);
+  row("Espèces attendues", formatEuroForPdf(payload.expectedCash));
+  row("Pourboires", formatEuroForPdf(payload.tips), true);
 
   return doc;
 }
