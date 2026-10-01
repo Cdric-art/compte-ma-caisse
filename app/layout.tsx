@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CashProvider } from "@/components/CashProvider";
 import { TabBar } from "@/components/TabBar";
+import { routeMetadata, siteDescription, siteName, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,9 +16,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Compte ta caisse",
-  description:
-    "Comptez votre fond de caisse et clôturez votre caisse rapidement, puis exportez le relevé en PDF.",
+  // Resout les URL relatives des metadonnees (Open Graph, canoniques).
+  metadataBase: new URL(siteUrl),
+  ...routeMetadata({
+    title: siteName,
+    description: siteDescription,
+    path: "/",
+  }),
+  // Après le spread : le gabarit suffixe le titre des pages enfants,
+  // là où routeMetadata ne pose qu'un titre simple.
+  title: {
+    default: siteName,
+    template: `%s · ${siteName}`,
+  },
+  applicationName: siteName,
+  // Permet l'ajout a l'ecran d'accueil iOS sans la barre d'adresse Safari.
+  appleWebApp: {
+    capable: true,
+    title: siteName,
+    statusBarStyle: "default",
+  },
   // Les icônes viennent des fichiers app/favicon.ico, app/icon.svg et
   // app/apple-icon.png : les déclarer ici les remplacerait.
 };

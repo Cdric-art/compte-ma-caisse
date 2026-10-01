@@ -44,6 +44,22 @@ La palette ne compte que six accents (love, gold, rose, pine, foam, iris) là o�
 utilisait dix. Ils cyclent sur les coupures et les moyens de paiement, de sorte que deux voisins
 n'aient jamais la même couleur.
 
+## Référencement et partage
+
+Les métadonnées sont construites par `routeMetadata()` dans `lib/site.ts`, appelé par le layout
+de chaque route. Next fusionne les métadonnées de façon **superficielle** : un `openGraph`
+déclaré dans un segment enfant remplace entièrement celui du parent, image comprise. Passer par
+ce helper évite qu'une page perde son aperçu de partage sans qu'on s'en aperçoive.
+
+Les pages étant des Client Components, elles ne peuvent pas exporter `metadata` : chaque route a
+donc un `layout.tsx` qui s'en charge.
+
+L'URL canonique vient de `NEXT_PUBLIC_SITE_URL`, sinon de l'URL de production Vercel, sinon du
+serveur local. Rien à modifier dans le code le jour où un nom de domaine arrive.
+
+Routes générées : `/robots.txt`, `/sitemap.xml`, `/manifest.webmanifest`, `/opengraph-image.png`,
+`/icon.svg`, `/apple-icon.png`.
+
 ## Développement
 
 ```bash
